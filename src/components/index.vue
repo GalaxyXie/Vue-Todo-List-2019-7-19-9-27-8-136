@@ -42,28 +42,48 @@ export default {
       checkString: "",
       items: [],
       itemsCopy:[],
+      condition: 1
     };
   },
   methods: {
     add() {
       
-      this.items.push({stringcontent:this.checkString,isChecked:false});
-      this.itemsCopy=this.items.slice();
+      this.itemsCopy.push({stringcontent:this.checkString,isChecked:false,isEdit:false});
+      this.items = this.itemsCopy.filter((item) => {
+        if (this.condition === 1) {
+          return item
+        } else if (this.condition === 2) {
+          return !item.isChecked
+        } else if (this.condition === 3) {
+          return item.isChecked
+        }
+      })
+      //this.items.push({stringcontent:this.checkString,isChecked:false,isEdit:false});
       this.checkString= "";
     },
     showAll() {
+      this.condition = 1;
       this.items=this.itemsCopy;
     },
     showChecked(){
+      this.condition = 2;
       this.items=null;
       this.items=this.itemsCopy.filter(item=>item.isChecked==false);
       this.checkString= "";
     },
     showNotChecked(){
+      this.condition = 3;
       this.items=null;
       this.items=this.itemsCopy.filter(item=>item.isChecked==true);
       this.checkString= "";
     },
+    editable(index){
+       alert(index);
+      this.items[index].isEdit = true;
+    },
+    input(index){
+      this.items[index].isEdit=false; 
+    } 
   }
 };
 </script>

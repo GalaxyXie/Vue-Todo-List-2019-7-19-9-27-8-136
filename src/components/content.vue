@@ -1,9 +1,10 @@
 <template>
   <div>
     <ol >
-      <li v-for="item in items" v-bind:key="item.key" v-bind:class="{ checked: item.isChecked }">
+      <li v-for="(item,index) in items" v-bind:key="item.key" v-bind:class="{ checked: item.isChecked }" >
         <input name="done-todo" type="checkbox" class="done-todo" v-model="item.isChecked" />
-        <span>{{item.stringcontent}}</span>
+        <input type="text" v-if="item.isEdit">
+        <span @dblclick="editable(index)" v-else @change='input(index)'>{{item.stringcontent}}</span>
       </li>
     </ol>
   </div>
@@ -13,5 +14,15 @@
 export default {
   name: "Content",
   props: ['items'],
+  methods:{
+    editable(index){
+      alert(index);
+      this.$emit("editable", index);   
+    },
+    // input(index){
+       
+    //     this.$emit("input", index);   
+    // }
+  }
 }
 </script>
